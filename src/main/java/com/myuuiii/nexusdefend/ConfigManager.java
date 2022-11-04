@@ -28,15 +28,15 @@ public class ConfigManager {
     }
 
     public int getMinimumPlayers(String mapId) {
-        return config.getInt("maps." + mapId + "minimumPlayers");
+        return config.getInt("maps." + mapId + ".minimumPlayers");
     }
 
     public int getGameTime(String mapId) {
-        return config.getInt("maps." + mapId + "gameTime");
+        return config.getInt("maps." + mapId + ".gameTime");
     }
 
     public boolean getTeamSelectDisabled(String mapId) {
-        return config.getBoolean("maps." + mapId + "disableTeamSelect");
+        return config.getBoolean("maps." + mapId + ".disableTeamSelect");
     }
 
     public ArrayList<String> getWorldIds() {
@@ -46,11 +46,11 @@ public class ConfigManager {
     public Location getSpawnLocation(String mapId) {
         Location loc = new Location(
                 getWorld(mapId),
-                config.getInt("maps." + mapId + "spawnCoords.x"),
-                config.getInt("maps." + mapId + "spawnCoords.y"),
-                config.getInt("maps." + mapId + "spawnCoords.z"),
-                (float) config.getDouble("maps." + mapId + "spawnCoords.pitch"),
-                (float) config.getDouble("maps." + mapId + "spawnCoords.yaw")
+                config.getInt("maps." + mapId + ".spawnCoords.x"),
+                config.getInt("maps." + mapId + ".spawnCoords.y"),
+                config.getInt("maps." + mapId + ".spawnCoords.z"),
+                (float) config.getDouble("maps." + mapId + ".spawnCoords.pitch"),
+                (float) config.getDouble("maps." + mapId + ".spawnCoords.yaw")
         );
         return loc;
     }
@@ -58,11 +58,11 @@ public class ConfigManager {
     public Location getAttackerSpawnLocation(String mapId) {
         Location loc = new Location(
                 getWorld(mapId),
-                config.getInt("maps." + mapId + "attackerCoords.x"),
-                config.getInt("maps." + mapId + "attackerCoords.y"),
-                config.getInt("maps." + mapId + "attackerCoords.z"),
-                (float) config.getDouble("maps." + mapId + "attackerCoords.pitch"),
-                (float) config.getDouble("maps." + mapId + "attackerCoords.yaw")
+                config.getInt("maps." + mapId + ".attackerCoords.x"),
+                config.getInt("maps." + mapId + ".attackerCoords.y"),
+                config.getInt("maps." + mapId + ".attackerCoords.z"),
+                (float) config.getDouble("maps." + mapId + ".attackerCoords.pitch"),
+                (float) config.getDouble("maps." + mapId + ".attackerCoords.yaw")
         );
         return loc;
     }
@@ -70,11 +70,11 @@ public class ConfigManager {
     public Location getDefenderSpawnLocation(String mapId) {
         Location loc = new Location(
                 getWorld(mapId),
-                config.getInt("maps." + mapId + "defenderCoords.x"),
-                config.getInt("maps." + mapId + "defenderCoords.y"),
-                config.getInt("maps." + mapId + "defenderCoords.z"),
-                (float) config.getDouble("maps." + mapId + "defenderCoords.pitch"),
-                (float) config.getDouble("maps." + mapId + "defenderCoords.yaw")
+                config.getInt("maps." + mapId + ".defenderCoords.x"),
+                config.getInt("maps." + mapId + ".defenderCoords.y"),
+                config.getInt("maps." + mapId + ".defenderCoords.z"),
+                (float) config.getDouble("maps." + mapId + ".defenderCoords.pitch"),
+                (float) config.getDouble("maps." + mapId + ".defenderCoords.yaw")
         );
         return loc;
     }
