@@ -1,0 +1,8 @@
+name: NexusDefend
+version: '${project.version}'
+main: com.myuuiii.nexusdefend.NexusDefend
+api-version: 1.19
+authors: [ Myuuiii ]
+description: Nexus defending minigame
+commands:
+  nd:

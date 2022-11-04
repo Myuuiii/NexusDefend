@@ -1,0 +1,37 @@
+maps:
+  1:
+    world: 'world'
+    minimumPlayers: 2
+    gameTime: 10
+    disableTeamSelect: false
+    spawnCoords:
+      x: 0
+      y: 0
+      z: 0
+      pitch: 0
+      yaw: 0
+    attackerCoords:
+      x: 0
+      y: 0
+      z: 0
+      pitch: 0
+      yaw: 0
+    defenderCoords:
+      x: 0
+      y: 0
+      z: 0
+      pitch: 0
+      yaw: 0
+    nexusLocations:
+      1:
+        x: 0
+        y: 0
+        z: 0
+      2:
+        x: 0
+        y: 0
+        z: 0
+      3:
+        x: 0
+        y: 0
+        z: 0
