@@ -42,6 +42,7 @@ public class GameListener implements Listener {
     public void onBlockBreakEvent(BlockBreakEvent event) {
         GameMap map = plugin.getMapManager().getMap(event.getPlayer());
         if (map != null) {
+            event.setCancelled(true);
             if (map.getState().equals(GameState.Live)) {
                 if (event.getBlock().getType() == Material.COAL_BLOCK) {
                     for (NexusLocation loc : map.NexusLocations) {
@@ -59,13 +60,8 @@ public class GameListener implements Listener {
 
                             // End the game if all the nexuses have been destroyed
                             map.getGameInfo().checkNexusStatesAndEndGameIfAllDestroyed();
-
-                            event.setCancelled(true);
                         }
                     }
-
-                } else {
-                    event.setCancelled(true);
                 }
             }
         }
