@@ -76,9 +76,12 @@ public class GameMap {
             Team lowest = (Team) count.values().toArray()[0];
             setTeam(player, lowest);
             // - END BALANCING
+
             if (getTeam(player) == Team.ATTACKERS)
                 setKit(player.getUniqueId(), KitType.WARRIOR);
-            else setKit(player.getUniqueId(), KitType.DEFENDER);
+            else if (getKit(player) != KitType.DEFENDER) {
+                setKit(player.getUniqueId(), KitType.DEFENDER);
+            }
 
             this.Players.add(player.getUniqueId());
             if (this.State.equals(GameState.WaitingForPlayers) && Players.size() >= ConfigManager.getMinimumPlayers(this.getId())) {
@@ -95,7 +98,9 @@ public class GameMap {
             removeTeam(player);
             removeKit(player.getUniqueId());
             if (this.State.equals(GameState.Countdown) && Players.size() < ConfigManager.getMinimumPlayers(this.getId())) {
-                reset(false);
+                this.State = GameState.WaitingForPlayers;
+                this.sendMessage("Too little players to start the game, going back into recruiting state");
+                reset(false, false);
             }
             return true;
         }
@@ -131,26 +136,25 @@ public class GameMap {
         timer.start();
     }
 
-    public void reset(boolean backToLobby) {
+    public void reset(boolean backToLobby, boolean removeAllPlayersFromGame) {
         setState(GameState.WaitingForPlayers);
         try {
             countdown.cancel();
             timer.cancel();
-            teams.clear();
-            for (UUID uuid : Players) {
-                Player player = Bukkit.getPlayer(uuid);
-                player.getInventory().clear();
-
-                for (PotionEffect potionEffect : player.getActivePotionEffects()) {
-                    player.removePotionEffect(potionEffect.getType());
-                }
-
-                removeKit(uuid);
-            }
         } catch (Exception e) {
             // haha. no
         }
+        teams.clear();
+        for (UUID uuid : Players) {
+            Player player = Bukkit.getPlayer(uuid);
+            player.getInventory().clear();
 
+            for (PotionEffect potionEffect : player.getActivePotionEffects()) {
+                player.removePotionEffect(potionEffect.getType());
+            }
+
+            removeKit(uuid);
+        }
         timer = new GameTimer(plugin, this);
         countdown = new Countdown(plugin, this);
         gameInfo = new GameInfo(this);
@@ -158,8 +162,10 @@ public class GameMap {
             for (UUID uuid : Players) {
                 teleportToLobby(Objects.requireNonNull(Bukkit.getPlayer(uuid)));
             }
-        Players.clear();
-        teams.clear();
+        if (removeAllPlayersFromGame) {
+            Players.clear();
+            teams.clear();
+        }
     }
 
     public GameInfo getGameInfo() {
@@ -169,13 +175,13 @@ public class GameMap {
     public void endGame(boolean allNexusesDestroyed, boolean defendedForTime) {
         if (allNexusesDestroyed) {
             this.sendMessage("All the nexuses have been destroyed! Attackers win!");
-            this.reset(true);
+            this.reset(true, true);
         } else if (defendedForTime) {
             this.sendMessage("The defenders have defended the nexuses successfully! Defenders win!");
-            this.reset(true);
+            this.reset(true, true);
         } else {
             this.sendMessage("Your game has been stopped by an administrator");
-            this.reset(true);
+            this.reset(true, true);
         }
     }
 
@@ -184,9 +190,15 @@ public class GameMap {
         removeTeam(player);
         teams.put(player.getUniqueId(), team);
         player.sendMessage("You have been placed on the " + team.getDisplay() + ChatColor.RESET + " team");
-        if (team == Team.DEFENDERS) {
+        if (team == Team.DEFENDERS && getKit(player) != KitType.DEFENDER) {
             setKit(player.getUniqueId(), KitType.DEFENDER);
         }
+    }
+
+    private KitType getKit(Player player) {
+        if (kits.containsKey(player.getUniqueId()))
+            return kits.get(player.getUniqueId()).getType();
+        return null;
     }
 
     public void removeTeam(Player player) {
@@ -244,8 +256,8 @@ public class GameMap {
 
     public int getKitCount(KitType kit) {
         int amount = 0;
-        for (KitType t : KitType.values()) {
-            if (t == kit) {
+        for (Kit t : kits.values()) {
+            if (t.getType() == kit) {
                 amount++;
             }
         }

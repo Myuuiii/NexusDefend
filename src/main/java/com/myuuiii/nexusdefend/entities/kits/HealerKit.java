@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.Potion;
@@ -38,6 +39,9 @@ public class HealerKit extends Kit {
         player.getInventory().setItem(1, absorptionPotions);
 
         ItemStack sword = new ItemStack(Material.STONE_SWORD, 1);
+        ItemMeta itemMeta = sword.getItemMeta();
+        itemMeta.setUnbreakable(true);
+        sword.setItemMeta(itemMeta);
         sword.addEnchantment(Enchantment.KNOCKBACK, 2);
         player.getInventory().setItem(3, sword);
 
@@ -45,6 +49,7 @@ public class HealerKit extends Kit {
         player.getInventory().setItem(8, food);
 
         ItemStack pickaxe = new ItemStack(Material.STONE_PICKAXE, 1);
+        pickaxe.setItemMeta(itemMeta);
         player.getInventory().setItem(4, pickaxe);
 
         // Armor

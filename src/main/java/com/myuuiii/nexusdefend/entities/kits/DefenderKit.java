@@ -21,6 +21,9 @@ public class DefenderKit extends Kit{
         player.getInventory().clear();
 
         ItemStack sword = new ItemStack(Material.DIAMOND_SWORD, 1);
+        ItemMeta itemMeta = sword.getItemMeta();
+        itemMeta.setUnbreakable(true);
+        sword.setItemMeta(itemMeta);
         sword.addEnchantment(Enchantment.DAMAGE_ALL, 5);
         sword.addEnchantment(Enchantment.DURABILITY, 3);
         player.getInventory().setItem(0, sword);

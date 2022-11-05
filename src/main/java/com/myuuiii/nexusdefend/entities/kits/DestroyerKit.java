@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.UUID;
@@ -23,6 +24,9 @@ public class DestroyerKit extends Kit {
 
         // Weapons
         ItemStack sword = new ItemStack(Material.WOODEN_SWORD, 1);
+        ItemMeta itemMeta = sword.getItemMeta();
+        itemMeta.setUnbreakable(true);
+        sword.setItemMeta(itemMeta);
         sword.addEnchantment(Enchantment.DAMAGE_ALL, 1);
         player.getInventory().setItem(1, sword);
 
@@ -30,6 +34,7 @@ public class DestroyerKit extends Kit {
         player.getInventory().setItem(8, food);
 
         ItemStack pickaxe = new ItemStack(Material.GOLDEN_PICKAXE, 1);
+        pickaxe.setItemMeta(itemMeta);
         player.getInventory().setItem(0, pickaxe);
 
         // Armor
