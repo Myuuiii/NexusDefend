@@ -3,19 +3,21 @@ package com.myuuiii.nexusdefend.entities;
 import org.bukkit.Location;
 
 public class NexusLocation {
-    public int NexusId;
+    public String NexusId;
     public Location Location;
+    public Integer Health;
 
-    public NexusLocation(int nexusId, org.bukkit.Location location) {
+    public NexusLocation(String nexusId, org.bukkit.Location location, int health) {
         NexusId = nexusId;
         Location = location;
+        Health = health;
     }
 
-    public int getNexusId() {
+    public String getNexusId() {
         return NexusId;
     }
 
-    public void setNexusId(int nexusId) {
+    public void setNexusId(String nexusId) {
         NexusId = nexusId;
     }
 

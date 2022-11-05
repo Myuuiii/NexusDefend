@@ -1,3 +1,5 @@
+enabled: true
+countdown: 10
 maps:
   1:
     world: 'world'
@@ -27,11 +29,14 @@ maps:
         x: 0
         y: 0
         z: 0
+        health: 20
       2:
         x: 0
         y: 0
         z: 0
+        health: 20
       3:
         x: 0
         y: 0
         z: 0
+        health: 20

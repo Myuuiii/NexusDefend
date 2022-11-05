@@ -1,11 +1,14 @@
 package com.myuuiii.nexusdefend;
 
 import com.myuuiii.nexusdefend.entities.NexusLocation;
+import com.myuuiii.nexusdefend.entities.GameMap;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,11 +29,11 @@ public class ConfigManager {
         return mapName;
     }
 
-    public int getMinimumPlayers(String mapId) {
+    public static int getMinimumPlayers(String mapId) {
         return config.getInt("maps." + mapId + ".minimumPlayers");
     }
 
-    public int getGameTime(String mapId) {
+    public static int getGameTime(String mapId) {
         return config.getInt("maps." + mapId + ".gameTime");
     }
 
@@ -81,12 +84,14 @@ public class ConfigManager {
     public ArrayList<NexusLocation> getNexusBlockLocations(String mapId) {
         ArrayList<NexusLocation> locations = new ArrayList<>();
         for (String str : config.getConfigurationSection("maps." + mapId + ".nexusLocations").getKeys(false)) {
-            locations.add(new NexusLocation(Integer.parseInt(str), new Location(
-                    getWorld(mapId),
-                    config.getInt("maps." + mapId + ".nexusLocations." + str + ".x"),
-                    config.getInt("maps." + mapId + ".nexusLocations." + str + ".y"),
-                    config.getInt("maps." + mapId + ".nexusLocations." + str + ".z")
-            )));
+            locations.add(new NexusLocation(str, new Location(
+                        getWorld(mapId),
+                        config.getInt("maps." + mapId + ".nexusLocations." + str + ".x"),
+                        config.getInt("maps." + mapId + ".nexusLocations." + str + ".y"),
+                        config.getInt("maps." + mapId + ".nexusLocations." + str + ".z")
+                ),
+            config.getInt("maps." + mapId + ".nexusLocations." + str + ".health")
+            ));
         }
         return locations;
     }
@@ -97,7 +102,7 @@ public class ConfigManager {
         Location attackerSpawnLocation = getAttackerSpawnLocation(mapId);
         ArrayList<NexusLocation> nexusLocations = getNexusBlockLocations(mapId);
 
-        GameMap map = new GameMap(mapId, spawnLocation, defenderSpawnLocation, attackerSpawnLocation, nexusLocations);
+        GameMap map = new GameMap(_plugin, mapId, spawnLocation, defenderSpawnLocation, attackerSpawnLocation, nexusLocations);
         return map;
     }
 
@@ -108,5 +113,26 @@ public class ConfigManager {
 
     public void setEnabled(boolean value) {
         config.set("enabled", value);
+    }
+
+    public void save() {
+        try {
+            config.save(_plugin.getDataFolder() + "./config.yml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static int getCountdownTime() {
+        return config.getInt("countdown");
+    }
+
+    public List<GameMap> getMaps() {
+        List<GameMap> maps = new ArrayList<>();
+        for (String str : config.getConfigurationSection("maps").getKeys(false)) {
+            maps.add(getMap(str));
+            System.out.println("MAP REGISTERED: " + str);
+        }
+        return maps;
     }
 }

@@ -2,9 +2,8 @@ package com.myuuiii.nexusdefend.enums;
 
 public enum GameState {
     WaitingForPlayers,
-    Starting,
-    InProgress,
-    TimeUp,
+    Countdown,
+    Live,
     Finishing,
     Finished
 }
