@@ -14,8 +14,8 @@ import java.util.Objects;
 
 public class NdCommand implements CommandExecutor {
 
-    private NexusDefend _plugin;
-    private GameMapManager _mapManager;
+    private final NexusDefend _plugin;
+    private final GameMapManager _mapManager;
 
     public NdCommand(NexusDefend plugin) {
         this._plugin = plugin;
@@ -48,7 +48,7 @@ public class NdCommand implements CommandExecutor {
                 sender.sendMessage("You have left the game");
                 break;
             case "team":
-                if (!player.hasPermission("nd.teamselect")) {
+                if (!player.hasPermission("nd.team_select")) {
                     player.sendMessage("You are not allowed to select your team");
                     return false;
                 }
