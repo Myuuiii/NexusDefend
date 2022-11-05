@@ -96,6 +96,9 @@ public class GameMap {
                 this.sendMessage("Too few players to start the game, going back into recruiting state");
                 reset(false, false);
             }
+            if (this.State.equals(GameState.Live) && Players.size() == 0) {
+                this.reset(true, true);
+            }
             return true;
         }
         return false;
