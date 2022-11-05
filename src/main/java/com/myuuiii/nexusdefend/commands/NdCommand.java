@@ -36,6 +36,10 @@ public class NdCommand implements CommandExecutor {
                     sender.sendMessage("You are already in this game");
                     return false;
                 }
+                if (joiningMap.getState() == GameState.Live) {
+                    sender.sendMessage("You can not join a game that is in progress");
+                    return false;
+                }
                 player.getInventory().clear();
                 player.setInvulnerable(true);
                 sender.sendMessage("You have joined the game");
