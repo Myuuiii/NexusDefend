@@ -1,16 +1,16 @@
 package com.myuuiii.nexusdefend.entities;
 
+import com.google.common.collect.TreeMultimap;
 import com.myuuiii.nexusdefend.ConfigManager;
 import com.myuuiii.nexusdefend.NexusDefend;
 import com.myuuiii.nexusdefend.enums.GameState;
+import com.myuuiii.nexusdefend.enums.Team;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class GameMap {
     public String Id;
@@ -24,6 +24,7 @@ public class GameMap {
     private NexusDefend plugin;
     private GameInfo gameInfo;
     private GameTimer timer;
+    private HashMap<UUID, Team> teams;
 
     public GameMap() {
     }
@@ -40,6 +41,7 @@ public class GameMap {
         this.countdown = new Countdown(this.plugin, this);
         this.timer = new GameTimer(this.plugin, this);
         this.gameInfo = new GameInfo(this);
+        this.teams = new HashMap<>();
     }
 
     public String getId() {
@@ -60,6 +62,16 @@ public class GameMap {
 
     public boolean addPlayer(Player player) {
         if (!this.Players.contains(player.getUniqueId())) {
+
+            // - BALANCING TEAMS
+            TreeMultimap<Integer, Team> count = TreeMultimap.create();
+            for (Team team : Team.values()) {
+                count.put(getTeamCount(team), team);
+            }
+            Team lowest = (Team) count.values().toArray()[0];
+            setTeam(player, lowest);
+            // - END BALANCING
+
             this.Players.add(player.getUniqueId());
             if (this.State.equals(GameState.WaitingForPlayers) && Players.size() >= ConfigManager.getMinimumPlayers(this.getId())) {
                 countdown.start();
@@ -72,8 +84,8 @@ public class GameMap {
     public boolean removePlayer(Player player) {
         if (this.Players.contains(player.getUniqueId())) {
             this.Players.remove(player.getUniqueId());
-            if (this.State.equals(GameState.Countdown) && Players.size() < ConfigManager.getMinimumPlayers(this.getId()))
-            {
+            removeTeam(player);
+            if (this.State.equals(GameState.Countdown) && Players.size() < ConfigManager.getMinimumPlayers(this.getId())) {
                 reset(false);
             }
             return true;
@@ -115,8 +127,7 @@ public class GameMap {
         try {
             countdown.cancel();
             timer.cancel();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             // haha. no
         }
 
@@ -127,15 +138,51 @@ public class GameMap {
             for (UUID uuid : Players) {
                 teleportToLobby(Objects.requireNonNull(Bukkit.getPlayer(uuid)));
             }
+        Players.clear();
+        teams.clear();
     }
 
     public GameInfo getGameInfo() {
         return this.gameInfo;
     }
 
-    public void endGame() {
-        reset(true);
-        sendMessage("Thank you for playing");
-        Players.clear();
+    public void endGame(boolean allNexusesDestroyed, boolean defendedForTime) {
+        if (allNexusesDestroyed) {
+            this.sendMessage("All the nexuses have been destroyed! Attackers win!");
+            this.reset(true);
+        } else if (defendedForTime) {
+            this.sendMessage("The defenders have defended the nexuses successfully! Defenders win!");
+            this.reset(true);
+        } else {
+            this.sendMessage("Your game has been stopped by an administrator");
+            this.reset(true);
+        }
+    }
+
+    /* Team Management */
+    public void setTeam(Player player, Team team) {
+        removeTeam(player);
+        teams.put(player.getUniqueId(), team);
+        player.sendMessage("You have been placed on the " + team.getDisplay() + ChatColor.RESET + " team");
+    }
+
+    public void removeTeam(Player player) {
+        if (teams.containsKey(player.getUniqueId())) {
+            teams.remove(player.getUniqueId());
+        }
+    }
+
+    public int getTeamCount(Team team) {
+        int amount = 0;
+        for (Team t : teams.values()) {
+            if (t == team) {
+                amount++;
+            }
+        }
+        return amount;
+    }
+
+    public Team getTeam(Player player) {
+        return teams.get(player.getUniqueId());
     }
 }

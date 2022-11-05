@@ -49,7 +49,7 @@ public class BaseCommand implements CommandExecutor {
         if (map.getState() == GameState.Live) {
             map.sendMessage("The game you were in was stopped by an administrator");
             sender.sendMessage("Game stopped successfully");
-            map.endGame();
+            map.endGame(false, false);
         } else {
             sender.sendMessage("This game has not started yet");
         }

@@ -21,7 +21,7 @@ public class GameTimer extends BukkitRunnable {
     public void run() {
         if (gameTime == 0) {
             cancel();
-            _map.endGame();
+            _map.endGame(false, true);
             return;
         }
 
