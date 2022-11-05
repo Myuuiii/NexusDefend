@@ -53,10 +53,8 @@ public class GameInfo {
     public void checkNexusStatesAndEndGameIfAllDestroyed() {
         boolean anyNexusAlive = false;
         for (NexusLocation nexus : _map.NexusLocations) {
-            System.out.print(NexusHealth.get(nexus.NexusId) + ", ");
             if (NexusHealth.get(nexus.NexusId) != 0) anyNexusAlive = true;
         }
-        System.out.println();
         if (!anyNexusAlive) {
             _map.endGame(true, false);
         }

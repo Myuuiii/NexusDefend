@@ -23,7 +23,7 @@ public class GameMapManager {
     public GameMap getMap(String id) {
         for (GameMap map : maps) {
             if (Objects.equals(map.getId(), id)) return map;
-            System.out.println("NOT MAP WITH ID " + map.getId());
+            System.out.println("NO MAP WITH ID " + map.getId());
         }
         return null;
     }

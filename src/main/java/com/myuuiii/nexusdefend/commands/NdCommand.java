@@ -28,7 +28,6 @@ public class NdCommand implements CommandExecutor {
         switch (args[0].toLowerCase()) {
             case "join":
                 String mapId = args[1];
-                System.out.println("MAP ID: " + mapId);
                 GameMap joiningMap = _mapManager.getMap(mapId);
                 boolean playerAdded = joiningMap.addPlayer(player);
                 if (!playerAdded) {
