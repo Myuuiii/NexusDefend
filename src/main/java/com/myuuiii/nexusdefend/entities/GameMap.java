@@ -77,12 +77,6 @@ public class GameMap {
             setTeam(player, lowest);
             // - END BALANCING
 
-            if (getTeam(player) == Team.ATTACKERS)
-                setKit(player.getUniqueId(), KitType.WARRIOR);
-            else if (getKit(player) != KitType.DEFENDER) {
-                setKit(player.getUniqueId(), KitType.DEFENDER);
-            }
-
             this.Players.add(player.getUniqueId());
             if (this.State.equals(GameState.WaitingForPlayers) && Players.size() >= ConfigManager.getMinimumPlayers(this.getId())) {
                 countdown.start();
@@ -99,7 +93,7 @@ public class GameMap {
             removeKit(player.getUniqueId());
             if (this.State.equals(GameState.Countdown) && Players.size() < ConfigManager.getMinimumPlayers(this.getId())) {
                 this.State = GameState.WaitingForPlayers;
-                this.sendMessage("Too little players to start the game, going back into recruiting state");
+                this.sendMessage("Too few players to start the game, going back into recruiting state");
                 reset(false, false);
             }
             return true;
@@ -188,10 +182,17 @@ public class GameMap {
     /* Team Management */
     public void setTeam(Player player, Team team) {
         removeTeam(player);
-        teams.put(player.getUniqueId(), team);
+        if (teams.containsKey(player.getUniqueId())) {
+            teams.replace(player.getUniqueId(), team);
+        } else {
+            teams.put(player.getUniqueId(), team);
+        }
         player.sendMessage("You have been placed on the " + team.getDisplay() + ChatColor.RESET + " team");
-        if (team == Team.DEFENDERS && getKit(player) != KitType.DEFENDER) {
+        if (team == Team.DEFENDERS) {
             setKit(player.getUniqueId(), KitType.DEFENDER);
+        }
+        if (team == Team.ATTACKERS) {
+            setKit(player.getUniqueId(), KitType.WARRIOR);
         }
     }
 
