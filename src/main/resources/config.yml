@@ -6,6 +6,8 @@ maps:
     minimumPlayers: 2
     gameTime: 10
     disableTeamSelect: false
+    attackerRespawnTime: 10
+    defenderRespawnTime: 20
     spawnCoords:
       x: 0
       y: 0

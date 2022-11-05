@@ -24,6 +24,14 @@ public class ConfigManager {
         plugin.saveDefaultConfig();
     }
 
+    public static int getRespawnTimeAttacker(String id) {
+        return config.getInt("maps." + id + ".attackerRespawnTime");
+    }
+
+    public static int getRespawnTimeDefender(String id) {
+        return config.getInt("maps." + id + ".defenderRespawnTime");
+    }
+
     public String getWorldName(String mapId) {
         String mapName = config.getString("maps." + mapId + ".world");
         return mapName;
@@ -85,12 +93,12 @@ public class ConfigManager {
         ArrayList<NexusLocation> locations = new ArrayList<>();
         for (String str : config.getConfigurationSection("maps." + mapId + ".nexusLocations").getKeys(false)) {
             locations.add(new NexusLocation(str, new Location(
-                        getWorld(mapId),
-                        config.getInt("maps." + mapId + ".nexusLocations." + str + ".x"),
-                        config.getInt("maps." + mapId + ".nexusLocations." + str + ".y"),
-                        config.getInt("maps." + mapId + ".nexusLocations." + str + ".z")
-                ),
-            config.getInt("maps." + mapId + ".nexusLocations." + str + ".health")
+                    getWorld(mapId),
+                    config.getInt("maps." + mapId + ".nexusLocations." + str + ".x"),
+                    config.getInt("maps." + mapId + ".nexusLocations." + str + ".y"),
+                    config.getInt("maps." + mapId + ".nexusLocations." + str + ".z")
+            ),
+                    config.getInt("maps." + mapId + ".nexusLocations." + str + ".health")
             ));
         }
         return locations;

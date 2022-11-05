@@ -6,6 +6,7 @@ import com.myuuiii.nexusdefend.commands.NdCommand;
 import com.myuuiii.nexusdefend.commands.NdCommandCompleter;
 import com.myuuiii.nexusdefend.listeners.ConnectListener;
 import com.myuuiii.nexusdefend.listeners.GameListener;
+import com.myuuiii.nexusdefend.listeners.PlayerRespawnListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -30,6 +31,7 @@ public final class NexusDefend extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(new ConnectListener(this), this);
         Bukkit.getPluginManager().registerEvents(new GameListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerRespawnListener(this, this._manager), this);
     }
 
     @Override

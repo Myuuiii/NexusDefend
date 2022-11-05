@@ -30,7 +30,10 @@ public class GameInfo {
         }
 
         for (UUID uuid : _map.getPlayers()) {
-            Bukkit.getPlayer(uuid).closeInventory();
+            Player player = Bukkit.getPlayer(uuid);
+            player.closeInventory();
+            _map.teleportPlayerToTeamSpawn(player);
+            player.setInvulnerable(false);
         }
     }
 

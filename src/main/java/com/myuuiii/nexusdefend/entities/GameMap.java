@@ -76,7 +76,9 @@ public class GameMap {
             Team lowest = (Team) count.values().toArray()[0];
             setTeam(player, lowest);
             // - END BALANCING
-            setKit(player.getUniqueId(), KitType.WARRIOR);
+            if (getTeam(player) == Team.ATTACKERS)
+                setKit(player.getUniqueId(), KitType.WARRIOR);
+            else setKit(player.getUniqueId(), KitType.DEFENDER);
 
             this.Players.add(player.getUniqueId());
             if (this.State.equals(GameState.WaitingForPlayers) && Players.size() >= ConfigManager.getMinimumPlayers(this.getId())) {
@@ -139,7 +141,7 @@ public class GameMap {
                 Player player = Bukkit.getPlayer(uuid);
                 player.getInventory().clear();
 
-                for (PotionEffect potionEffect :player.getActivePotionEffects()) {
+                for (PotionEffect potionEffect : player.getActivePotionEffects()) {
                     player.removePotionEffect(potionEffect.getType());
                 }
 
@@ -251,5 +253,22 @@ public class GameMap {
         if (kits.containsKey(player.getUniqueId()))
             return kits.get(player.getUniqueId()).getType();
         return null;
+    }
+
+    public void respawnPlayer(Player player) {
+        player.setInvulnerable(false);
+        teleportPlayerToTeamSpawn(player);
+    }
+
+    public void teleportPlayerToTeamSpawn(Player player) {
+        switch (getTeam(player)) {
+            case ATTACKERS:
+                teleportToAttackerSpawn(player);
+                break;
+            case DEFENDERS:
+                teleportToDefenderSpawn(player);
+                break;
+        }
+        kits.get(player.getUniqueId()).onStart(player);
     }
 }

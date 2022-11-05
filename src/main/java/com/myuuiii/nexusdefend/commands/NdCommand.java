@@ -36,6 +36,8 @@ public class NdCommand implements CommandExecutor {
                     sender.sendMessage("You are already in this game");
                     return false;
                 }
+                player.getInventory().clear();
+                player.setInvulnerable(true);
                 sender.sendMessage("You have joined the game");
                 player.teleport(joiningMap.LobbySpawn);
                 break;
@@ -45,6 +47,8 @@ public class NdCommand implements CommandExecutor {
                     sender.sendMessage("You are currently not in a game");
                     return false;
                 }
+                player.getInventory().clear();
+                player.setInvulnerable(false);
                 leavingMap.removePlayer(Objects.requireNonNull(player));
                 sender.sendMessage("You have left the game");
                 break;
