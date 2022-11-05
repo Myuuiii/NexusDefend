@@ -221,6 +221,9 @@ public class GameMap {
             case HEALER:
                 kits.put(uuid, new HealerKit(plugin, uuid));
                 break;
+            case DESTROYER:
+                kits.put(uuid, new DestroyerKit(plugin, uuid));
+                break;
             case DEFENDER:
                 kits.put(uuid, new DefenderKit(plugin, uuid));
                 break;

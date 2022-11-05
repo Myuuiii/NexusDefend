@@ -9,7 +9,8 @@ public enum KitType {
     WARRIOR("Warrior", Material.DIAMOND_SWORD, "For close range combat"),
     ARCHER("Archer", Material.BOW, "For ranged combat"),
     HEALER("Healer", Material.POTION, "Help your allies by healing them"),
-    DEFENDER("Defender", Material.NETHER_STAR, "Defend the nexuses");
+    DESTROYER("Destroyer", Material.GOLDEN_PICKAXE, "Quickly damage a nexus, limited durability"),
+    DEFENDER("Defender",Material.NETHER_STAR, "Defend the nexuses");
 
     private String display;
     private Material guiItem;

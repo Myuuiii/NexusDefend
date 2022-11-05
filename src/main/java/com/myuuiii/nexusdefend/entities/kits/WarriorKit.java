@@ -28,6 +28,9 @@ public class WarriorKit extends Kit {
         ItemStack food = new ItemStack(Material.COOKED_BEEF, 16);
         player.getInventory().setItem(8, food);
 
+        ItemStack pickaxe = new ItemStack(Material.STONE_PICKAXE, 1);
+        player.getInventory().setItem(1, pickaxe);
+
         // Armor
         ItemStack helmet = new ItemStack(Material.IRON_HELMET, 1);
         helmet.addEnchantment(Enchantment.DURABILITY, 3);

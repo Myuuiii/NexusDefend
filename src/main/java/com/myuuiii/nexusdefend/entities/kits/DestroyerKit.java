@@ -11,9 +11,9 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.UUID;
 
-public class ArcherKit extends Kit {
+public class DestroyerKit extends Kit {
 
-    public ArcherKit(NexusDefend plugin, UUID uuid) {
+    public DestroyerKit(NexusDefend plugin, UUID uuid) {
         super(plugin, KitType.ARCHER, uuid);
     }
 
@@ -22,32 +22,20 @@ public class ArcherKit extends Kit {
         player.getInventory().clear();
 
         // Weapons
-        ItemStack bow = new ItemStack(Material.BOW, 1);
-        bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
-        bow.addEnchantment(Enchantment.ARROW_FIRE, 1);
-        player.getInventory().setItem(0, bow);
-
-        ItemStack arrow = new ItemStack(Material.ARROW, 1);
-        player.getInventory().setItem(10, arrow);
-
-        ItemStack sword = new ItemStack(Material.IRON_SWORD, 1);
+        ItemStack sword = new ItemStack(Material.WOODEN_SWORD, 1);
         sword.addEnchantment(Enchantment.DAMAGE_ALL, 1);
         player.getInventory().setItem(1, sword);
 
         ItemStack food = new ItemStack(Material.COOKED_BEEF, 16);
         player.getInventory().setItem(8, food);
 
-        ItemStack pickaxe = new ItemStack(Material.STONE_PICKAXE, 1);
-        player.getInventory().setItem(2, pickaxe);
+        ItemStack pickaxe = new ItemStack(Material.GOLDEN_PICKAXE, 1);
+        player.getInventory().setItem(0, pickaxe);
 
         // Armor
-        ItemStack helmet = new ItemStack(Material.LEATHER_HELMET, 1);
-        LeatherArmorMeta coloredItemMeta = (LeatherArmorMeta)helmet.getItemMeta();
-        coloredItemMeta.setColor(Color.fromRGB(10, 100, 0));
-        helmet.setItemMeta(coloredItemMeta);
-        player.getInventory().setHelmet(helmet);
-
         ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
+        LeatherArmorMeta coloredItemMeta = (LeatherArmorMeta)chest.getItemMeta();
+        coloredItemMeta.setColor(Color.fromRGB(100, 100, 0));
         chest.setItemMeta(coloredItemMeta);
         player.getInventory().setChestplate(chest);
 

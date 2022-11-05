@@ -44,6 +44,9 @@ public class HealerKit extends Kit {
         ItemStack food = new ItemStack(Material.COOKED_BEEF, 16);
         player.getInventory().setItem(8, food);
 
+        ItemStack pickaxe = new ItemStack(Material.STONE_PICKAXE, 1);
+        player.getInventory().setItem(4, pickaxe);
+
         // Armor
         ItemStack helmet = new ItemStack(Material.LEATHER_HELMET, 1);
         LeatherArmorMeta coloredItemMeta = (LeatherArmorMeta)helmet.getItemMeta();
