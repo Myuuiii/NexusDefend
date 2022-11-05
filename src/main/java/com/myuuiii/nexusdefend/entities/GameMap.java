@@ -3,12 +3,15 @@ package com.myuuiii.nexusdefend.entities;
 import com.google.common.collect.TreeMultimap;
 import com.myuuiii.nexusdefend.ConfigManager;
 import com.myuuiii.nexusdefend.NexusDefend;
+import com.myuuiii.nexusdefend.entities.kits.*;
 import com.myuuiii.nexusdefend.enums.GameState;
+import com.myuuiii.nexusdefend.enums.KitType;
 import com.myuuiii.nexusdefend.enums.Team;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 
 import java.util.*;
 
@@ -25,6 +28,7 @@ public class GameMap {
     private GameInfo gameInfo;
     private GameTimer timer;
     private HashMap<UUID, Team> teams;
+    private HashMap<UUID, Kit> kits;
 
     public GameMap() {
     }
@@ -42,6 +46,7 @@ public class GameMap {
         this.timer = new GameTimer(this.plugin, this);
         this.gameInfo = new GameInfo(this);
         this.teams = new HashMap<>();
+        this.kits = new HashMap<>();
     }
 
     public String getId() {
@@ -71,6 +76,7 @@ public class GameMap {
             Team lowest = (Team) count.values().toArray()[0];
             setTeam(player, lowest);
             // - END BALANCING
+            setKit(player.getUniqueId(), KitType.WARRIOR);
 
             this.Players.add(player.getUniqueId());
             if (this.State.equals(GameState.WaitingForPlayers) && Players.size() >= ConfigManager.getMinimumPlayers(this.getId())) {
@@ -85,6 +91,7 @@ public class GameMap {
         if (this.Players.contains(player.getUniqueId())) {
             this.Players.remove(player.getUniqueId());
             removeTeam(player);
+            removeKit(player.getUniqueId());
             if (this.State.equals(GameState.Countdown) && Players.size() < ConfigManager.getMinimumPlayers(this.getId())) {
                 reset(false);
             }
@@ -127,6 +134,17 @@ public class GameMap {
         try {
             countdown.cancel();
             timer.cancel();
+            teams.clear();
+            for (UUID uuid : Players) {
+                Player player = Bukkit.getPlayer(uuid);
+                player.getInventory().clear();
+
+                for (PotionEffect potionEffect :player.getActivePotionEffects()) {
+                    player.removePotionEffect(potionEffect.getType());
+                }
+
+                removeKit(uuid);
+            }
         } catch (Exception e) {
             // haha. no
         }
@@ -164,6 +182,9 @@ public class GameMap {
         removeTeam(player);
         teams.put(player.getUniqueId(), team);
         player.sendMessage("You have been placed on the " + team.getDisplay() + ChatColor.RESET + " team");
+        if (team == Team.DEFENDERS) {
+            setKit(player.getUniqueId(), KitType.DEFENDER);
+        }
     }
 
     public void removeTeam(Player player) {
@@ -184,5 +205,51 @@ public class GameMap {
 
     public Team getTeam(Player player) {
         return teams.get(player.getUniqueId());
+    }
+
+    public void setKit(UUID uuid, KitType type) {
+        removeKit(uuid);
+        switch (type) {
+            case WARRIOR:
+                kits.put(uuid, new WarriorKit(plugin, uuid));
+                break;
+            case ARCHER:
+                kits.put(uuid, new ArcherKit(plugin, uuid));
+                break;
+            case HEALER:
+                kits.put(uuid, new HealerKit(plugin, uuid));
+                break;
+            case DEFENDER:
+                kits.put(uuid, new DefenderKit(plugin, uuid));
+                break;
+        }
+        Bukkit.getPlayer(uuid).sendMessage("You have selected the " + type.getDisplay() + ChatColor.RESET + " kit");
+    }
+
+    public void removeKit(UUID uuid) {
+        if (kits.containsKey(uuid)) {
+            kits.get(uuid).remove();
+            kits.remove(uuid);
+        }
+    }
+
+    public HashMap<UUID, Kit> getKits() {
+        return this.kits;
+    }
+
+    public int getKitCount(KitType kit) {
+        int amount = 0;
+        for (KitType t : KitType.values()) {
+            if (t == kit) {
+                amount++;
+            }
+        }
+        return amount;
+    }
+
+    public KitType getKitType(Player player) {
+        if (kits.containsKey(player.getUniqueId()))
+            return kits.get(player.getUniqueId()).getType();
+        return null;
     }
 }

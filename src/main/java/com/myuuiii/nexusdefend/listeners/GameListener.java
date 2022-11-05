@@ -4,6 +4,7 @@ import com.myuuiii.nexusdefend.NexusDefend;
 import com.myuuiii.nexusdefend.entities.GameMap;
 import com.myuuiii.nexusdefend.entities.NexusLocation;
 import com.myuuiii.nexusdefend.enums.GameState;
+import com.myuuiii.nexusdefend.enums.KitType;
 import com.myuuiii.nexusdefend.enums.Team;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -22,6 +23,8 @@ public class GameListener implements Listener {
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
+
+        // TEAM SELECTION
         if (event.getInventory() != null && event.getCurrentItem() != null && event.getView().getTitle().contains("Team Selection")) {
             Team team = Team.valueOf(event.getCurrentItem().getItemMeta().getLocalizedName());
 
@@ -31,6 +34,22 @@ public class GameListener implements Listener {
                     player.sendMessage("You are already on this team");
                 } else {
                     map.setTeam(player, team);
+                }
+            }
+            player.closeInventory();
+            event.setCancelled(true);
+        }
+
+        // KIT SELECTION
+        if (event.getInventory() != null && event.getCurrentItem() != null && event.getView().getTitle().contains("Kit Selection")) {
+            KitType kit = KitType.valueOf(event.getCurrentItem().getItemMeta().getLocalizedName());
+
+            GameMap map = plugin.getMapManager().getMap(player);
+            if (map != null) {
+                if (map.getKitType(player) == kit) {
+                    player.sendMessage("You are already have this kit selected");
+                } else {
+                    map.setKit(player.getUniqueId(), kit);
                 }
             }
             player.closeInventory();

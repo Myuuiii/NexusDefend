@@ -4,6 +4,8 @@ import com.myuuiii.nexusdefend.GameMapManager;
 import com.myuuiii.nexusdefend.NexusDefend;
 import com.myuuiii.nexusdefend.entities.GameMap;
 import com.myuuiii.nexusdefend.enums.GameState;
+import com.myuuiii.nexusdefend.enums.Team;
+import com.myuuiii.nexusdefend.gui.KitUI;
 import com.myuuiii.nexusdefend.gui.TeamUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -61,6 +63,18 @@ public class NdCommand implements CommandExecutor {
                 } else {
                     sender.sendMessage("You can not use this right now");
                 }
+                break;
+            case "kit":
+                GameMap kitSelectMap = _mapManager.getMap(player);
+                if (kitSelectMap == null) {
+                    sender.sendMessage("You are currently not in a game");
+                    return false;
+                }
+                if (kitSelectMap.getTeam(player) == Team.DEFENDERS) {
+                    sender.sendMessage("As a defender you can not change your kit");
+                    return false;
+                }
+                new KitUI(kitSelectMap, player);
                 break;
         }
         return false;

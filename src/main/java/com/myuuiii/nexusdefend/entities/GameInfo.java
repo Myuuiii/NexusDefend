@@ -21,6 +21,10 @@ public class GameInfo {
         this._map.setState(GameState.Live);
         this._map.sendMessage(ChatColor.GREEN + "Game has started");
 
+        for (UUID uuid : _map.getKits().keySet()) {
+            _map.getKits().get(uuid).onStart(Bukkit.getPlayer(uuid));
+        }
+
         for (NexusLocation nexus : _map.NexusLocations) {
             NexusHealth.put(nexus.NexusId, nexus.Health);
         }
