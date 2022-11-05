@@ -23,7 +23,6 @@ public class ConfigManager {
 
     public String getWorldName(String mapId) {
         String mapName = config.getString("maps." + mapId + ".world");
-        System.out.println("REQUESTED WORLD NAME: " + mapName);
         return mapName;
     }
 
@@ -104,7 +103,6 @@ public class ConfigManager {
 
     public World getWorld(String mapId) {
         World world = _plugin.getServer().getWorld(getWorldName(mapId));
-        System.out.println(world.getName() + " has been found");
         return world;
     }
 

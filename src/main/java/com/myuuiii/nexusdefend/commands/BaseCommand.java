@@ -3,6 +3,7 @@ package com.myuuiii.nexusdefend.commands;
 import com.myuuiii.nexusdefend.ConfigManager;
 import com.myuuiii.nexusdefend.GameMap;
 import com.myuuiii.nexusdefend.NexusDefend;
+import com.myuuiii.nexusdefend.entities.NexusLocation;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -42,10 +43,13 @@ public class BaseCommand implements CommandExecutor {
         for (String str : listOfMaps) {
             sender.sendMessage("Map ID: " + str);
             GameMap map = _data.getMap(str);
-            sender.sendMessage("SPAWN COORDS: " + "X:" + map.LobbySpawn.getX() + "Y:" + map.LobbySpawn.getY() + "Z:" + map.LobbySpawn.getZ());
-            sender.sendMessage("ATTACKER SPAWN COORDS: " + "X:" + map.AttackerSpawn.getX() + "Y:" + map.AttackerSpawn.getY() + "Z:" + map.AttackerSpawn.getZ());
-            sender.sendMessage("DEFENDER SPAWN COORDS: " + "X:" + map.DefenderSpawn.getX() + "Y:" + map.DefenderSpawn.getY() + "Z:" + map.DefenderSpawn.getZ());
-//            sender.sendMessage("Nexus Count: " + map.NexusLocations.stream().count());
+            sender.sendMessage("    SPAWN COORDS: " + "[ " + map.LobbySpawn.getX() + " " + map.LobbySpawn.getY() + " " + map.LobbySpawn.getZ() + " ]");
+            sender.sendMessage("    ATTACKER SPAWN COORDS: " + "[ " + map.AttackerSpawn.getX() + " " + map.AttackerSpawn.getY() + " " + map.AttackerSpawn.getZ() + " ]");
+            sender.sendMessage("    DEFENDER SPAWN COORDS: " + "[ " + map.DefenderSpawn.getX() + " " + map.DefenderSpawn.getY() + " " + map.DefenderSpawn.getZ() + " ]");
+            sender.sendMessage("    Nexus Count: " + map.NexusLocations.stream().count());
+            for (NexusLocation loc : map.NexusLocations) {
+                sender.sendMessage("        NEXUS " + "[ " + loc.Location.getX() + " " + loc.Location.getY() + " " + loc.Location.getZ() + " ]");
+            }
         }
     }
 

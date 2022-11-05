@@ -29,7 +29,6 @@ public class GameMap {
         State = GameState.WaitingForPlayers;
         Players = new ArrayList<>();
         NexusLocations = nexusLocations;
-        System.out.println("Left constructor");
     }
 
     public String getId() {
