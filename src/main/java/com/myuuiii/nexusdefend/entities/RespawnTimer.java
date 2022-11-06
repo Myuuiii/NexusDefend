@@ -6,14 +6,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.UUID;
-
 public class RespawnTimer extends BukkitRunnable {
-    private NexusDefend _plugin;
-    private GameMap _map;
+    private final NexusDefend _plugin;
+    private final GameMap _map;
+    private final Player player;
     private int respawnTime;
     private boolean isAttacker;
-    private Player player;
 
 
     public RespawnTimer(NexusDefend _plugin, GameMap _map, boolean isAttacker, Player player) {

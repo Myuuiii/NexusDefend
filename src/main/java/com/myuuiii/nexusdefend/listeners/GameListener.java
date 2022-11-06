@@ -14,7 +14,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class GameListener implements Listener {
-    private NexusDefend plugin;
+    private final NexusDefend plugin;
 
     public GameListener(NexusDefend nexusDefend) {
         this.plugin = nexusDefend;

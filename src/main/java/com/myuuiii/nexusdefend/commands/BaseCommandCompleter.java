@@ -14,6 +14,7 @@ import java.util.List;
 public class BaseCommandCompleter implements TabCompleter {
     NexusDefend _plugin;
     ConfigManager _data;
+
     public BaseCommandCompleter(NexusDefend plugin) {
         this._plugin = plugin;
         this._data = _plugin.getData();
@@ -21,9 +22,8 @@ public class BaseCommandCompleter implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        switch (args.length) {
-            case 1:
-                return StringUtil.copyPartialMatches(args[0], Arrays.asList("enable", "disable", "showMaps", "forceEnd"), new ArrayList<>());
+        if (args.length == 1) {
+            return StringUtil.copyPartialMatches(args[0], Arrays.asList("enable", "disable", "showMaps", "forceEnd"), new ArrayList<>());
         }
         return null;
     }

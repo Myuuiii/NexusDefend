@@ -2,14 +2,13 @@ package com.myuuiii.nexusdefend.entities;
 
 import com.myuuiii.nexusdefend.ConfigManager;
 import com.myuuiii.nexusdefend.NexusDefend;
-import com.myuuiii.nexusdefend.entities.GameMap;
 import com.myuuiii.nexusdefend.enums.GameState;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Countdown extends BukkitRunnable {
-    private NexusDefend _plugin;
-    private GameMap _map;
+    private final NexusDefend _plugin;
+    private final GameMap _map;
     private int countdownTime;
 
     public Countdown(NexusDefend plugin, GameMap map) {
@@ -26,7 +25,7 @@ public class Countdown extends BukkitRunnable {
             return;
         }
 
-        if (countdownTime <= 10 || countdownTime % 15 == 0){
+        if (countdownTime <= 10 || countdownTime % 15 == 0) {
             _map.sendMessage("Starting in " + ChatColor.GREEN + countdownTime + " second" + (countdownTime == 1 ? "" : "s"));
         }
 

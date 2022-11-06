@@ -206,9 +206,7 @@ public class GameMap {
     }
 
     public void removeTeam(Player player) {
-        if (teams.containsKey(player.getUniqueId())) {
-            teams.remove(player.getUniqueId());
-        }
+        teams.remove(player.getUniqueId());
     }
 
     public int getTeamCount(Team team) {

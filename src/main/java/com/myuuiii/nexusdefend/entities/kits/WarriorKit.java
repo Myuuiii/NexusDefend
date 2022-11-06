@@ -2,13 +2,11 @@ package com.myuuiii.nexusdefend.entities.kits;
 
 import com.myuuiii.nexusdefend.NexusDefend;
 import com.myuuiii.nexusdefend.enums.KitType;
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.UUID;
 

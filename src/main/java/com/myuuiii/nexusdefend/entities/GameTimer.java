@@ -2,13 +2,11 @@ package com.myuuiii.nexusdefend.entities;
 
 import com.myuuiii.nexusdefend.ConfigManager;
 import com.myuuiii.nexusdefend.NexusDefend;
-import com.myuuiii.nexusdefend.enums.GameState;
-import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameTimer extends BukkitRunnable {
-    private NexusDefend _plugin;
-    private GameMap _map;
+    private final NexusDefend _plugin;
+    private final GameMap _map;
     private int gameTime;
 
     public GameTimer(NexusDefend plugin, GameMap map) {

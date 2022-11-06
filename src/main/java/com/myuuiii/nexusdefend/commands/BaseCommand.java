@@ -1,9 +1,8 @@
 package com.myuuiii.nexusdefend.commands;
 
 import com.myuuiii.nexusdefend.ConfigManager;
-import com.myuuiii.nexusdefend.GameMapManager;
-import com.myuuiii.nexusdefend.entities.GameMap;
 import com.myuuiii.nexusdefend.NexusDefend;
+import com.myuuiii.nexusdefend.entities.GameMap;
 import com.myuuiii.nexusdefend.entities.NexusLocation;
 import com.myuuiii.nexusdefend.enums.GameState;
 import org.bukkit.command.Command;

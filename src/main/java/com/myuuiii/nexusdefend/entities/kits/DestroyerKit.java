@@ -39,7 +39,7 @@ public class DestroyerKit extends Kit {
 
         // Armor
         ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
-        LeatherArmorMeta coloredItemMeta = (LeatherArmorMeta)chest.getItemMeta();
+        LeatherArmorMeta coloredItemMeta = (LeatherArmorMeta) chest.getItemMeta();
         coloredItemMeta.setColor(Color.fromRGB(100, 100, 0));
         chest.setItemMeta(coloredItemMeta);
         player.getInventory().setChestplate(chest);

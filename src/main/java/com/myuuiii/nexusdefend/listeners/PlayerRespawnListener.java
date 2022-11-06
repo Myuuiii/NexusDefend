@@ -8,12 +8,11 @@ import com.myuuiii.nexusdefend.enums.Team;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 public class PlayerRespawnListener implements Listener {
-    private NexusDefend plugin;
-    private GameMapManager _mapManager;
+    private final NexusDefend plugin;
+    private final GameMapManager _mapManager;
 
     public PlayerRespawnListener(NexusDefend plugin, GameMapManager _mapManager) {
         this.plugin = plugin;
@@ -22,7 +21,7 @@ public class PlayerRespawnListener implements Listener {
 
     @EventHandler
     public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
-        Player player = (Player)event.getPlayer();
+        Player player = event.getPlayer();
         GameMap map = _mapManager.getMap(player);
         player.getInventory().clear();
         event.setRespawnLocation(map.LobbySpawn);

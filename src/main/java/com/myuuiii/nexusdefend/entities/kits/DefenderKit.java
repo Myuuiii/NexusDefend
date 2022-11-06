@@ -11,7 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
 
-public class DefenderKit extends Kit{
+public class DefenderKit extends Kit {
     public DefenderKit(NexusDefend plugin, UUID uuid) {
         super(plugin, KitType.ARCHER, uuid);
     }

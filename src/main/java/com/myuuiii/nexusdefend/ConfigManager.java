@@ -1,12 +1,11 @@
 package com.myuuiii.nexusdefend;
 
-import com.myuuiii.nexusdefend.entities.NexusLocation;
 import com.myuuiii.nexusdefend.entities.GameMap;
+import com.myuuiii.nexusdefend.entities.NexusLocation;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,9 +13,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class ConfigManager {
-    private File _file;
     private static FileConfiguration config;
     private static NexusDefend _plugin;
+    private File _file;
 
     public static void setupConfig(NexusDefend plugin) {
         _plugin = plugin;
@@ -32,17 +31,21 @@ public class ConfigManager {
         return config.getInt("maps." + id + ".defenderRespawnTime");
     }
 
-    public String getWorldName(String mapId) {
-        String mapName = config.getString("maps." + mapId + ".world");
-        return mapName;
-    }
-
     public static int getMinimumPlayers(String mapId) {
         return config.getInt("maps." + mapId + ".minimumPlayers");
     }
 
     public static int getGameTime(String mapId) {
         return config.getInt("maps." + mapId + ".gameTime");
+    }
+
+    public static int getCountdownTime() {
+        return config.getInt("countdown");
+    }
+
+    public String getWorldName(String mapId) {
+        String mapName = config.getString("maps." + mapId + ".world");
+        return mapName;
     }
 
     public boolean getTeamSelectDisabled(String mapId) {
@@ -129,10 +132,6 @@ public class ConfigManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static int getCountdownTime() {
-        return config.getInt("countdown");
     }
 
     public List<GameMap> getMaps() {

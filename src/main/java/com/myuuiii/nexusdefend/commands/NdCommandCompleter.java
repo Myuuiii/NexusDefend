@@ -16,9 +16,8 @@ public class NdCommandCompleter implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        switch (args.length) {
-            case 1:
-                return StringUtil.copyPartialMatches(args[0], Arrays.asList("join", "leave", "team", "kit"), new ArrayList<>());
+        if (args.length == 1) {
+            return StringUtil.copyPartialMatches(args[0], Arrays.asList("join", "leave", "team", "kit"), new ArrayList<>());
         }
         return null;
     }

@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class GameInfo {
-    private GameMap _map;
+    private final GameMap _map;
 
-    private HashMap<String, Integer> NexusHealth = new HashMap<>();
+    private final HashMap<String, Integer> NexusHealth = new HashMap<>();
 
     public GameInfo(GameMap map) {
         this._map = map;

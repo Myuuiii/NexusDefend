@@ -16,7 +16,7 @@ public class TeamUI {
         for (Team team : Team.values()) {
             ItemStack is = new ItemStack(team.getMaterial());
             ItemMeta isMeta = is.getItemMeta();
-            isMeta.setDisplayName(team.getDisplay() + ChatColor.RESET + " (" +map.getTeamCount(team) + " players)");
+            isMeta.setDisplayName(team.getDisplay() + ChatColor.RESET + " (" + map.getTeamCount(team) + " players)");
             isMeta.setLocalizedName(team.name());
             is.setItemMeta(isMeta);
             gui.addItem(is);

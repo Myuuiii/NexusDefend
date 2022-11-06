@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -27,13 +26,13 @@ public class HealerKit extends Kit {
 
         // Weapons
         ItemStack regenerationPotions = new ItemStack(Material.SPLASH_POTION, 16);
-        PotionMeta regenerationPotionMeta = (PotionMeta)regenerationPotions.getItemMeta();
+        PotionMeta regenerationPotionMeta = (PotionMeta) regenerationPotions.getItemMeta();
         regenerationPotionMeta.addCustomEffect(new PotionEffect(PotionEffectType.REGENERATION, 10, 2, false), true);
         regenerationPotions.setItemMeta(regenerationPotionMeta);
         player.getInventory().setItem(0, regenerationPotions);
 
         ItemStack absorptionPotions = new ItemStack(Material.SPLASH_POTION, 8);
-        PotionMeta absorptionPotionMeta = (PotionMeta)absorptionPotions.getItemMeta();
+        PotionMeta absorptionPotionMeta = (PotionMeta) absorptionPotions.getItemMeta();
         absorptionPotionMeta.addCustomEffect(new PotionEffect(PotionEffectType.ABSORPTION, 15, 10, false), true);
         absorptionPotions.setItemMeta(absorptionPotionMeta);
         player.getInventory().setItem(1, absorptionPotions);
@@ -54,7 +53,7 @@ public class HealerKit extends Kit {
 
         // Armor
         ItemStack helmet = new ItemStack(Material.LEATHER_HELMET, 1);
-        LeatherArmorMeta coloredItemMeta = (LeatherArmorMeta)helmet.getItemMeta();
+        LeatherArmorMeta coloredItemMeta = (LeatherArmorMeta) helmet.getItemMeta();
         coloredItemMeta.setColor(Color.fromRGB(100, 10, 0));
         helmet.setItemMeta(coloredItemMeta);
         player.getInventory().setHelmet(helmet);

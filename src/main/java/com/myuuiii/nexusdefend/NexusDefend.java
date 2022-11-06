@@ -46,6 +46,7 @@ public final class NexusDefend extends JavaPlugin {
     public ConfigManager getData() {
         return this._data;
     }
+
     public GameMapManager getMapManager() {
         return this._manager;
     }

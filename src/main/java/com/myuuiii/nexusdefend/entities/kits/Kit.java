@@ -10,8 +10,8 @@ import org.bukkit.event.Listener;
 import java.util.UUID;
 
 public abstract class Kit implements Listener {
-    private KitType type;
-    private UUID uuid;
+    private final KitType type;
+    private final UUID uuid;
 
     public Kit(NexusDefend plugin, KitType type, UUID uuid) {
         this.uuid = uuid;
