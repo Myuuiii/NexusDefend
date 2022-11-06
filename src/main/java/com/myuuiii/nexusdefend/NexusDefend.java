@@ -4,11 +4,16 @@ import com.myuuiii.nexusdefend.commands.BaseCommand;
 import com.myuuiii.nexusdefend.commands.BaseCommandCompleter;
 import com.myuuiii.nexusdefend.commands.NdCommand;
 import com.myuuiii.nexusdefend.commands.NdCommandCompleter;
+import com.myuuiii.nexusdefend.entities.GameMap;
 import com.myuuiii.nexusdefend.listeners.ConnectListener;
 import com.myuuiii.nexusdefend.listeners.GameListener;
 import com.myuuiii.nexusdefend.listeners.PlayerRespawnListener;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.UUID;
 
 public final class NexusDefend extends JavaPlugin {
 
@@ -32,11 +37,23 @@ public final class NexusDefend extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ConnectListener(this), this);
         Bukkit.getPluginManager().registerEvents(new GameListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerRespawnListener(this, this._manager), this);
+        System.out.println(ChatColor.RED + "ENABLED NEXUSDEFEND" + ChatColor.RESET);
+
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        resetScoreboards();
+        System.out.println(ChatColor.RED + "DISABLED NEXUSDEFEND" + ChatColor.RESET);
+    }
+
+    private void resetScoreboards() {
+        for (GameMap map : _manager.getMaps()) {
+            for (UUID uuid : map.Players) {
+                Player player = Bukkit.getPlayer(uuid);
+                map.removeScoreboard(player);
+            }
+        }
     }
 
     public NexusDefend getPlugin() {

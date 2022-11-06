@@ -7,11 +7,14 @@ import com.myuuiii.nexusdefend.entities.kits.*;
 import com.myuuiii.nexusdefend.enums.GameState;
 import com.myuuiii.nexusdefend.enums.KitType;
 import com.myuuiii.nexusdefend.enums.Team;
+import com.myuuiii.nexusdefend.scoreboard.ScoreboardManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.*;
 
@@ -26,9 +29,11 @@ public class GameMap {
     private Countdown countdown;
     private NexusDefend plugin;
     private GameInfo gameInfo;
-    private GameTimer timer;
+    public GameTimer timer;
     private HashMap<UUID, Team> teams;
     private HashMap<UUID, Kit> kits;
+    public HashMap<UUID, ScoreboardManager> scoreboards;
+    private ScoreboardManager scoreboardManager;
 
     public GameMap() {
     }
@@ -47,6 +52,7 @@ public class GameMap {
         this.gameInfo = new GameInfo(this);
         this.teams = new HashMap<>();
         this.kits = new HashMap<>();
+        this.scoreboards = new HashMap<>();
     }
 
     public String getId() {
@@ -78,6 +84,10 @@ public class GameMap {
             // - END BALANCING
 
             this.Players.add(player.getUniqueId());
+
+            // Add player to scoreboard
+            addScoreboard(player);
+
             if (this.State.equals(GameState.WaitingForPlayers) && Players.size() >= ConfigManager.getMinimumPlayers(this.getId())) {
                 countdown.start();
             }
@@ -91,6 +101,7 @@ public class GameMap {
             this.Players.remove(player.getUniqueId());
             removeTeam(player);
             removeKit(player.getUniqueId());
+            removeScoreboard(player);
             if (this.State.equals(GameState.Countdown) && Players.size() < ConfigManager.getMinimumPlayers(this.getId())) {
                 this.State = GameState.WaitingForPlayers;
                 this.sendMessage("Too few players to start the game, going back into recruiting state");
@@ -145,6 +156,8 @@ public class GameMap {
         for (UUID uuid : Players) {
             Player player = Bukkit.getPlayer(uuid);
             player.getInventory().clear();
+
+            removeScoreboard(player);
 
             for (PotionEffect potionEffect : player.getActivePotionEffects()) {
                 player.removePotionEffect(potionEffect.getType());
@@ -287,5 +300,17 @@ public class GameMap {
                 break;
         }
         kits.get(player.getUniqueId()).onStart(player);
+    }
+
+    public void addScoreboard(Player player){
+        if (scoreboards.containsKey(player.getUniqueId())) return;
+        scoreboards.put(player.getUniqueId(), new ScoreboardManager(this, player));
+    }
+
+    public void removeScoreboard(Player player) {
+        if (!scoreboards.containsKey(player.getUniqueId())) return;
+        ScoreboardManager manager = scoreboards.get(player.getUniqueId());
+        manager.dispose();
+        scoreboards.remove(player.getUniqueId());
     }
 }

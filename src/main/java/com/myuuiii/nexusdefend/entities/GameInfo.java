@@ -1,6 +1,7 @@
 package com.myuuiii.nexusdefend.entities;
 
 import com.myuuiii.nexusdefend.enums.GameState;
+import com.myuuiii.nexusdefend.scoreboard.ScoreboardManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

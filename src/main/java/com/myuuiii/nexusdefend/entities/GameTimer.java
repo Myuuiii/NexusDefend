@@ -2,6 +2,7 @@ package com.myuuiii.nexusdefend.entities;
 
 import com.myuuiii.nexusdefend.ConfigManager;
 import com.myuuiii.nexusdefend.NexusDefend;
+import com.myuuiii.nexusdefend.scoreboard.ScoreboardManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameTimer extends BukkitRunnable {
@@ -28,9 +29,20 @@ public class GameTimer extends BukkitRunnable {
         }
 
         gameTime--;
+
+        // Update scoreboards
+        for (ScoreboardManager scoreboardManager : _map.scoreboards.values()) {
+            scoreboardManager.updateScoreboard();
+        }
     }
 
     public void start() {
         runTaskTimer(_plugin, 0, 20);
+    }
+
+    public String getTimeRemaining() {
+        int minutes = gameTime / 60;
+        int seconds = gameTime % 60;
+        return minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
     }
 }
