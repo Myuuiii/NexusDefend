@@ -26,7 +26,7 @@ public class ScoreboardManager {
     }
 
     public void updateScoreboard() {
-        obj.setDisplayName(ChatColor.GOLD + "[" + ChatColor.DARK_GRAY + map.timer.getTimeRemaining() + ChatColor.GOLD + "]");
+        obj.setDisplayName(ChatColor.GOLD + "[" + ChatColor.GRAY + map.timer.getTimeRemaining() + ChatColor.GOLD + "]");
         obj.getScore(" ").setScore(69);
         for (NexusLocation nexus : map.NexusLocations) {
             Score nexusScore = obj.getScore("Nexus " + nexus.getNexusId());
