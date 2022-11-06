@@ -51,6 +51,11 @@ public class GameInfo {
         }
         NexusHealth.replace(nexusId, currentHealth);
         _map.sendMessage(ChatColor.RED + player.getName() + ChatColor.RESET + " has damaged nexus " + ChatColor.GOLD + nexusId);
+
+        // Update scoreboards
+        for (ScoreboardManager scoreboardManager : _map.scoreboards.values()) {
+            scoreboardManager.updateScoreboard();
+        }
     }
 
     public int getNexusHealth(String nexusId) {

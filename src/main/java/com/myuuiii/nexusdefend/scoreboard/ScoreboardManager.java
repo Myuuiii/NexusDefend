@@ -29,7 +29,7 @@ public class ScoreboardManager {
         obj.setDisplayName(ChatColor.GOLD + "[" + ChatColor.GRAY + map.timer.getTimeRemaining() + ChatColor.GOLD + "]");
         obj.getScore(" ").setScore(69);
         for (NexusLocation nexus : map.NexusLocations) {
-            Score nexusScore = obj.getScore("Nexus " + nexus.getNexusId());
+            Score nexusScore = obj.getScore(ChatColor.GOLD + "Nexus " + ChatColor.GRAY + nexus.getNexusId() + ChatColor.RESET);
             nexusScore.setScore(gameInfo.getNexusHealth(nexus.getNexusId()));
         }
         player.setScoreboard(scoreboard);
